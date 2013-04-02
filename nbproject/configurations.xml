@@ -4,6 +4,15 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Arbin.h</itemPath>
+      <itemPath>ArbinConCopias.h</itemPath>
+      <itemPath>Arbus.h</itemPath>
+      <itemPath>Cola.h</itemPath>
+      <itemPath>DCola.h</itemPath>
+      <itemPath>Excepciones.h</itemPath>
+      <itemPath>Lista.h</itemPath>
+      <itemPath>Pila.h</itemPath>
+      <itemPath>PilaLE.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
