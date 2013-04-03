@@ -217,6 +217,10 @@ public:
 		return ret;
     }
     
+    /*
+     * Devuelve un árbol intercambiando elementos
+     * izquierdos por derechos.
+     */
     static Arbin<T> espejo(Arbin<T> &arbol) {
         
         Arbin<T> ret;
@@ -234,6 +238,70 @@ public:
         }
     
         return ret;
+    }
+    
+    const T minElemL() {
+        
+        T elem = NULL;
+        
+        if( ! esVacio() ) {
+            Lista<T> list = inorden();
+            
+            elem = minLista(list);
+        }
+        
+        return elem;
+    }
+    
+    const T minLista(Lista<T> &lista) {
+        
+        T min;
+        
+        typename Lista<T>::Iterador it = lista.principio();
+        
+        min = it.elem();
+        
+        while (it != lista.final()) {
+            
+            T elem = it.elem();
+            
+            if ( elem < min) min = elem;
+            
+            it.avanza();
+        }
+        
+        return min;
+    }
+    
+    /*
+     *
+     */
+    const T minElem() {
+        
+        T elem = raiz();
+        
+        if( ! esHoja() ) {
+            
+            T elem2 = hijoIz().raiz();
+            T elem3 = hijoDr().raiz();
+            
+            elem = minElemenTres(elem, elem2, elem3);
+        }
+        
+    }
+    
+    const T &minElemenTres(const T &elem1, const T &elem2, const T &elem3) {
+        
+        T ret = elem1;
+        
+        if (elem2 < elem1 && elem2 < elem3) {
+            ret = elem2;
+        }
+        else if (elem3 < elem1 && elem3 < elem2) {
+            ret = elem3;
+        }
+        
+        return *ret;
     }
 
 	// //

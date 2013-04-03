@@ -23,6 +23,8 @@ int main(int argc, const char * argv[]) {
     
     Lista<int>::Iterador it = lista.principio();
     
+    cout << "Elmentos frontera: " << endl;
+    
     while (it != lista.final()) {
         cout << it.elem() << endl;
         it.avanza();
@@ -34,10 +36,14 @@ int main(int argc, const char * argv[]) {
     
     it = lista.principio();
     
+    cout << "Árbol espejo: " << endl;
+    
     while (it != lista.final()) {
         cout << it.elem() << endl;
         it.avanza();
     }
+    
+    cout << "Elemento mínimo del árbol: " << a.minElemL();
     
     return 0;
 }
