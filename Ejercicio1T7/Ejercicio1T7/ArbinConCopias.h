@@ -187,6 +187,54 @@ public:
 	unsigned int numHojas() const {
 		return numHojasAux(_ra);
 	}
+    
+    /*
+     * Devuelve true si el árbol es una hoja.
+     */
+    bool esHoja() const {
+        return (hijoIz().esVacio() && hijoDr().esVacio());
+    }
+    
+    /*
+     * Devuelve una lista con las hojas del árbol de izq a drch.
+     */
+    static Lista<T> frontera(const Arbin<T> &arbol) {
+        Lista<T> ret;
+        
+        if (arbol.esVacio())
+			return ret;
+        
+        if (arbol.esHoja()) {
+            ret.ponDr(arbol.raiz());
+        }
+        
+        Lista<T> hijoI = frontera(arbol.hijoIz());
+        ret.concatenaCopia(hijoI);
+        
+        Lista<T> hijoD = frontera(arbol.hijoDr());
+        ret.concatenaCopia(hijoD);
+        
+		return ret;
+    }
+    
+    static Arbin<T> espejo(Arbin<T> &arbol) {
+        
+        Arbin<T> ret;
+        
+        if ( ! arbol.esVacio() ) {
+            Arbin<T> iz = arbol.hijoIz();
+            Arbin<T> dr = arbol.hijoDr();
+            
+            T elem = arbol.raiz();
+            
+            ret = Arbin<T>(dr, elem, iz);
+        
+            espejo(iz);
+            espejo(dr);
+        }
+    
+        return ret;
+    }
 
 	// //
 	// M�TODOS DE "FONTANER�A" DE C++ QUE HACEN VERS�TIL
@@ -314,16 +362,6 @@ protected:
 
 		return numHojasAux(ra->_iz) + numHojasAux(ra->_dr);
 	}
-        
-        static bool esHoja(Nodo *n) {
-            bool esHoja = false;
-            
-//            if (n != NULL) {
-                esHoja = ( n != NULL && n->_iz == NULL && n->_dr == NULL );
-//            }
-            
-            return esHoja;
-        }
 
 private:
 
