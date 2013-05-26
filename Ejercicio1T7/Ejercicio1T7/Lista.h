@@ -216,6 +216,22 @@ public:
 
 		return aux->_elem;
 	}
+    
+    Lista<T> & concatena(Lista<T> &lista) {
+        return concatenaAux(lista);
+    }
+    
+    Lista<T> & concatenaCopia(Lista<T> &lista) {
+        
+        Lista<T>::Iterador it = lista.principio();
+        
+        while (it != lista.final()) {
+            ponDr(it.elem());
+            it.avanza();
+        }
+        
+        return *this;
+    }
 
 	/**
 	 Clase interna que implementa un iterador sobre
@@ -396,6 +412,22 @@ protected:
 			act = act->_sig;
 		}
 	}
+    
+    /**
+     Concatena los elementos de una lista a la actual.
+     */
+    Lista<T> &concatenaAux(Lista<T> &lista) {
+        
+        Nodo *nuevoUltimo = lista._prim;
+        _ult->_sig = nuevoUltimo;
+        
+        nuevoUltimo->_ant = _ult;
+        
+        lista._prim = NULL;
+        lista._ult = NULL;
+        
+        return *this;
+    }
 
 private:
 

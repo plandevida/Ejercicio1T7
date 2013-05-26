@@ -188,8 +188,120 @@ public:
 		return numHojasAux(_ra);
 	}
     
-    bool esHoja() {
-        return hijoIz().esVacio() && hijoDr().esVacio();
+    /*
+     * Devuelve true si el árbol es una hoja.
+     */
+    bool esHoja() const {
+        return (hijoIz().esVacio() && hijoDr().esVacio());
+    }
+    
+    /*
+     * Devuelve una lista con las hojas del árbol de izq a drch.
+     */
+    static Lista<T> frontera(const Arbin<T> &arbol) {
+        Lista<T> ret;
+        
+        if (arbol.esVacio())
+			return ret;
+        
+        if (arbol.esHoja()) {
+            ret.ponDr(arbol.raiz());
+        }
+        
+        Lista<T> hijoI = frontera(arbol.hijoIz());
+        ret.concatenaCopia(hijoI);
+        
+        Lista<T> hijoD = frontera(arbol.hijoDr());
+        ret.concatenaCopia(hijoD);
+        
+		return ret;
+    }
+    
+    /*
+     * Devuelve un árbol intercambiando elementos
+     * izquierdos por derechos.
+     */
+    static Arbin<T> espejo(Arbin<T> &arbol) {
+        
+        Arbin<T> ret;
+        
+        if ( ! arbol.esVacio() ) {
+            Arbin<T> iz = arbol.hijoIz();
+            Arbin<T> dr = arbol.hijoDr();
+            
+            T elem = arbol.raiz();
+            
+            ret = Arbin<T>(dr, elem, iz);
+        
+            espejo(iz);
+            espejo(dr);
+        }
+    
+        return ret;
+    }
+    
+    const T minElemL() {
+        
+        T elem = NULL;
+        
+        if( ! esVacio() ) {
+            Lista<T> list = inorden();
+            
+            elem = minLista(list);
+        }
+        
+        return elem;
+    }
+    
+    const T minLista(Lista<T> &lista) {
+        
+        T min;
+        
+        typename Lista<T>::Iterador it = lista.principio();
+        
+        min = it.elem();
+        
+        while (it != lista.final()) {
+            
+            T elem = it.elem();
+            
+            if ( elem < min) min = elem;
+            
+            it.avanza();
+        }
+        
+        return min;
+    }
+    
+    /*
+     *
+     */
+    const T minElem() {
+        
+        T elem = raiz();
+        
+        if( ! esHoja() ) {
+            
+            T elem2 = hijoIz().raiz();
+            T elem3 = hijoDr().raiz();
+            
+            elem = minElemenTres(elem, elem2, elem3);
+        }
+        
+    }
+    
+    const T &minElemenTres(const T &elem1, const T &elem2, const T &elem3) {
+        
+        T ret = elem1;
+        
+        if (elem2 < elem1 && elem2 < elem3) {
+            ret = elem2;
+        }
+        else if (elem3 < elem1 && elem3 < elem2) {
+            ret = elem3;
+        }
+        
+        return *ret;
     }
 
 	// //
@@ -318,16 +430,6 @@ protected:
 
 		return numHojasAux(ra->_iz) + numHojasAux(ra->_dr);
 	}
-        
-        static bool esHoja(Nodo *n) {
-            bool esHoja = false;
-            
-//            if (n != NULL) {
-                esHoja = ( n != NULL && n->_iz == NULL && n->_dr == NULL );
-//            }
-            
-            return esHoja;
-        }
 
 private:
 
