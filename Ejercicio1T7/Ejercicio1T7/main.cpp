@@ -9,16 +9,14 @@
 #include <iostream>
 #include "ArbinConCopias.h"
 
+using namespace std;
+
 int main(int argc, const char * argv[]) {
 
-    Arbin<int> a;
+    Arbin<int> a(Arbin<int>(Arbin<int>(), 2, Arbin<int>(Arbin<int>(), 4, Arbin<int>())), 1, Arbin<int>(Arbin<int>(Arbin<int>(), 5, Arbin<int>()), 3, Arbin<int>()));
     
-    for (int i = 0; i < 10; i++) {
-        Arbin<int> b(NULL, i+1, NULL);
-        Arbin<int> c(NULL, i+2, NULL);
-        
-        a = construyeYVacia<int>(b, i, c);
-    }
+    
+    cout << a.esHoja();
     
     return 0;
 }

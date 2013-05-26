@@ -187,6 +187,10 @@ public:
 	unsigned int numHojas() const {
 		return numHojasAux(_ra);
 	}
+    
+    bool esHoja() {
+        return hijoIz().esVacio() && hijoDr().esVacio();
+    }
 
 	// //
 	// M�TODOS DE "FONTANER�A" DE C++ QUE HACEN VERS�TIL
